@@ -1,9 +1,17 @@
+/*
+TODO: give explanation of why creep cannot be built
+TODO: add debug
+
+*/
+
+
 var HelperFunctions = require('HelperFunctions');
 var RoomHandler = require('RoomHandler');
 var ScoutHandler = require('ScoutHandler');
 var Room = require('Room');
 var CreepBase = require('CreepBase');
 var CreepScout = require('CreepScout');
+var Const = require('Const');
 
 //ScoutHandler.setRoomHandler(RoomHandler);
 
@@ -26,10 +34,10 @@ for(var n in rooms) {
 		room.population.goalsMet() +
 		', population: ' +
 		room.population.getTotalPopulation() + '/' + room.population.getMaxPopulation() +
-		' (' + room.population.getType('CreepBuilder').total + '/' +
+		' (' + //room.population.getType('CreepBuilder').total + '/' +
 		room.population.getType('CreepMiner').total + '/' +
-		room.population.getType('CreepCarrier').total + '/' +
-		room.population.getType('CreepSoldier').total + 
+		room.population.getType('CreepUpgrader').total + '/' +
+		room.population.getType('CreepBuilder').total + 
 		'), ' +
 		'resources at: ' + parseInt( (room.depositManager.energy() / room.depositManager.energyCapacity())*100) +'%, ' +
 		'max resources: ' + room.depositManager.energyCapacity() +'u, ' +
@@ -42,3 +50,4 @@ for(var n in rooms) {
 //ScoutHandler.spawnNewScouts();
 
 HelperFunctions.garbageCollection();
+

@@ -1,4 +1,13 @@
 var Cache = require('Cache');
+var Const = require('Const');
+
+/*
+Adding new type:
+
+add to typeDistribution
+
+*/
+
 function Population(room) {
 	this.cache = new Cache();
 	this.room = room;
@@ -7,21 +16,30 @@ function Population(room) {
 	this.typeDistribution = {
 		CreepMiner: {
 			total: 0,
-			goalPercentage: 0.2,
+			goalPercentage: Const.MINER_PERCENT,
 			currentPercentage: 0,
-			max: 5,
+			max: Const.MINER_MAX,
 			minExtensions: 0
 		},
-		CreepCarrier: {
+		CreepUpgrader: {
 			total: 0,
-			goalPercentage: 0.3,
+			goalPercentage: Const.UPGRADER_PERCENT,
 			currentPercentage: 0,
-			max: 15,
+			max: Const.UPGRADER_MAX,
 			minExtensions: 0
 		},
 		CreepBuilder: {
 			total: 0,
-			goalPercentage: 0.25,
+			goalPercentage: Const.MINER_PERCENT,
+			currentPercentage: 0,
+			max: Const.MINER_MAX,
+			minExtensions: 0
+		}
+
+		/* ,
+		CreepCarrier: {
+			total: 0,
+			goalPercentage: 0.3,
 			currentPercentage: 0,
 			max: 15,
 			minExtensions: 0
@@ -46,7 +64,7 @@ function Population(room) {
 			currentPercentage: 0,
 			max: 3,
 			minExtensions: 10
-		}
+		}*/
 	};
 
 	this.creeps = this.room.find(FIND_MY_CREEPS);
@@ -68,11 +86,12 @@ function Population(room) {
 Population.prototype.goalsMet = function() {
 	for(var n in this.typeDistribution) {
 		var type = this.typeDistribution[n];
+//		Const.debug('population', 'goal for type ' + n +' == ' + type.currentPercentage +' < '+(type.goalPercentage - type.goalPercentage/4) +' && '+type.total < type.max) || type.total == 0  || type.total < type.max*0.75);
 		if((type.currentPercentage < (type.goalPercentage - type.goalPercentage/4) && type.total < type.max) || type.total == 0  || type.total < type.max*0.75) {
 			return false;
 		}
 	}
-
+// +'  '+ 
 	return true;
 };
 
